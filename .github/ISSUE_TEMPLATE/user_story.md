@@ -1,9 +1,7 @@
 ---
 name: User Story
 about: Template for GiftLink user stories using Gherkin syntax.
-title: 'Story: '
-labels: enhancement
-assignees: ''
+title: 'User Story: '
 ---
 
 **As a** [role]
