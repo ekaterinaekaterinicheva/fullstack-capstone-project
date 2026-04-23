@@ -1,3 +1,6 @@
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
@@ -8,10 +11,10 @@ let filename = `${__dirname}/gifts.json`;
 const dbName = 'giftdb';
 const collectionName = 'gifts';
 
-// notice you have to load the array of gifts into the data object
+// Load the array of gifts into the data object
 const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs;
 
-// connect to database and insert data into the collection
+// Connect to database and insert data into the collection
 async function loadData() {
     const client = new MongoClient(url);
 
