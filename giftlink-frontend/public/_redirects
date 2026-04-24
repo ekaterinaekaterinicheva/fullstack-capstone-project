@@ -1,1 +1,4 @@
-/   /home.html   301!
+/* Force the main landing page to go to the static home.html */
+/            /home.html    301!
+/* Catch the /app request and point it to index.html (it routes to MainPage from there). */
+/* /index.html   200
