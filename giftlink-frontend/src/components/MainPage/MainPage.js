@@ -13,7 +13,7 @@ function MainPage() {
                 const response = await fetch(url);
                 
                 if (!response.ok) {
-                    // something went wrong
+                    // Something went wrong
                     throw new Error(`HTTP error; ${response.status}`);
                 }
 
@@ -68,7 +68,7 @@ function MainPage() {
                                 {gift.condition}
                                 </p>
 
-                                {/* Task 6: Display formatted date */}
+                                {/* Display formatted date */}
                                 <p className="card-text">{formatDate(gift.date_added)}</p>
                                 
 

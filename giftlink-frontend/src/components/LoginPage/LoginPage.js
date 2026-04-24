@@ -45,7 +45,7 @@ function LoginPage() {
           sessionStorage.setItem('email', json.userEmail);
             // Set the user's state to log in
           setIsLoggedIn(true);
-            // Navigate to the MainPage after logging in.
+            // Navigate to the MainPage after logging in
           navigate('/app');
         } else {
             // Clear input and set an error message if the password is incorrect

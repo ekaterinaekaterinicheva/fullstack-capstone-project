@@ -91,7 +91,7 @@ function SearchPage() {
                                 ))}
                                 </select>
 
-                            {/* The age range slider and display of the selected value. */}
+                            {/* The age range slider and display of the selected value */}
                             {/* Age Range Slider */}
                             <label htmlFor="ageRange">Less than {ageRange} years</label>
                             <input

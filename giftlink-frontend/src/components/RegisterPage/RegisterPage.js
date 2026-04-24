@@ -57,7 +57,7 @@ function RegisterPage() {
                         
                         {/* First Name */}
                         <div className="mb-4">
-                            <label htmlFor="firstName" className="form-label">FirstName</label>
+                            <label htmlFor="firstName" className="form-label">First Name</label>
                             <input
                                 id="firstName"
                                 type="text"
@@ -70,7 +70,7 @@ function RegisterPage() {
 
                         {/* Last Name */}
                         <div className="mb-3">
-                            <label htmlFor="lastName" className="form-label">LastName</label>
+                            <label htmlFor="lastName" className="form-label">Last Name</label>
                             <input
                                 id="lastName"
                                 type="text"

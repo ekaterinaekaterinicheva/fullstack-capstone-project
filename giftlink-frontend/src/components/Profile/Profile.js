@@ -65,15 +65,10 @@ const handleSubmit = async (e) => {
 
     const payload = { ...updatedDetails };
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
-      //Step 1: Task 1
-      //Step 1: Task 2
-      //Step 1: Task 3
     });
 
     if (response.ok) {
       // Update the user details in session storage
-      //Step 1: Task 4
-      //Step 1: Task 5
       setUserDetails(updatedDetails);
       setEditMode(false);
       // Display success message to the user
@@ -89,7 +84,6 @@ const handleSubmit = async (e) => {
     }
   } catch (error) {
     console.error(error);
-    // Handle error case
   }
 };
 
