@@ -62,7 +62,7 @@ function RegisterPage() {
                                 id="firstName"
                                 type="text"
                                 className="form-control"
-                                placeholder="Enter your firstName"
+                                placeholder="Enter your first name"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
