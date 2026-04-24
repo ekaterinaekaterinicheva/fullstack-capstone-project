@@ -13,12 +13,12 @@ router.get('/', async (req, res, next) => {
         // Initialize the query object
         let query = {};
 
-        // 1. Name filter logic
+        // Name filter logic
         if (req.query.name && req.query.name.trim() !== '') {
             query.name = { $regex: req.query.name, $options: "i" };
         }
 
-        // 2. Add other filters
+        // Other filters
         if (req.query.category) {
             query.category = req.query.category;
         }
@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
             query.age_years = { $lte: parseInt(req.query.age_years) };
         }
 
-        // 3. Store the results in the 'gifts' constant
+        // Store the results in the 'gifts' constant
         const gifts = await collection.find(query).toArray();
 
         res.json(gifts);

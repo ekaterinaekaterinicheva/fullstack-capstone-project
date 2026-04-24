@@ -16,20 +16,20 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/register', async (req, res) => {
     try {
-        // Task 1: Connect to `giftsdb` in MongoDB through `connectToDatabase` in `db.js`
+        // Connect to `giftsdb` in MongoDB through `connectToDatabase` in `db.js`
         const db = await connectToDatabase();
 
-        // Task 2: Access MongoDB collection
+        // Access MongoDB collection
         const collection = db.collection("users");
 
-        //Task 3: Check for existing email
+        // Check for existing email
         const existingEmail = await collection.findOne({ email: req.body.email });
 
         const salt = await bcryptjs.genSalt(10);
         const hash = await bcryptjs.hash(req.body.password, salt);
         const email = req.body.email;
 
-        //Task 4: Save user details in database
+        // Save user details in database
         const newUser = await collection.insertOne({
             email: req.body.email,
             firstName: req.body.firstName,
@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-//Login Endpoint
+// Login Endpoint
 router.post('/login', async (req, res) => {
     console.log("\n\n Inside login")
     try {

@@ -12,7 +12,7 @@ const app = express();
 app.use("*",cors());
 const port = process.env.PORT || 3060;
 
-// Connect to MongoDB; we just do this one time
+// Connect to MongoDB
 connectToDatabase().then(() => {
     pinoLogger.info('Connected to DB');
 })

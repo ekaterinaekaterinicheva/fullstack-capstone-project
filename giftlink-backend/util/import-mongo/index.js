@@ -23,10 +23,10 @@ async function loadData() {
         await client.connect();
         console.log("Connected successfully to server");
 
-        // database will be created if it does not exist
+        // Database will be created if it does not exist
         const db = client.db(dbName);
 
-        // collection will be created if it does not exist
+        // Collection will be created if it does not exist
         const collection = db.collection(collectionName);
         let cursor = await collection.find({});
         let documents = await cursor.toArray();
