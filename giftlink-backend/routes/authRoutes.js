@@ -7,6 +7,7 @@ const connectToDatabase = require('../models/db');
 const router = express.Router();
 const dotenv = require('dotenv');
 const pino = require('pino');  // Import Pino logger
+const { ObjectId } = require('mongodb');
 
 const logger = pino();  // Create a Pino logger instance
 
@@ -89,6 +90,52 @@ router.post('/login', async (req, res) => {
         logger.error(e);
         return res.status(500).json({ error: 'Internal server error', details: e.message });
       }
+});
+
+// Profile Endpoint
+router.get('/profile', async (req, res) => {
+    try {
+        const token = req.header('Authorization').replace('Bearer ', '');
+        if (!token) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const db = await connectToDatabase();
+        const collection = db.collection("users");
+        const user = await collection.findOne({ _id: new ObjectId(decoded.user.id) });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ name: user.firstName, email: user.email });
+    } catch (e) {
+        logger.error(e);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Update Profile Endpoint
+router.put('/update', async (req, res) => {
+    try {
+        const token = req.header('Authorization').replace('Bearer ', '');
+        if (!token) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const db = await connectToDatabase();
+        const collection = db.collection("users");
+        const { email, name } = req.body;
+        const result = await collection.updateOne(
+            { _id: new ObjectId(decoded.user.id) },
+            { $set: { firstName: name } }
+        );
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ error: 'User not found or no changes made' });
+        }
+        res.json({ message: 'Profile updated successfully' });
+    } catch (e) {
+        logger.error(e);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 module.exports = router;
