@@ -25,21 +25,34 @@ const Profile = () => {
     try {
       const authtoken = sessionStorage.getItem("auth-token");
       const email = sessionStorage.getItem("email");
-      const name=sessionStorage.getItem('name');
-      if (name || authtoken) {
-                const storedUserDetails = {
-                  name: name,
-                  email:email
-                };
 
-                setUserDetails(storedUserDetails);
-                setUpdatedDetails(storedUserDetails);
-              }
-} catch (error) {
-  console.error(error);
-  // Handle error case
-}
-};
+      if (!authtoken) {
+        navigate("/app/login");
+        return;
+      }
+
+      // Call the backend endpoint
+      const response = await fetch(`${urlConfig.backendUrl}/api/auth/profile`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${authtoken}`, // Pass the JWT token
+          "Email": email,
+        },
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        setUserDetails(user);
+        setUpdatedDetails(user);
+      } else {
+        // Handle error case
+        throw new Error("Failed to fetch user profile");
+      }
+
+      } catch (error) {
+        console.error("Fetch profile error:", error);
+    }
+  };
 
 const handleEdit = () => {
 setEditMode(true);
