@@ -25,7 +25,10 @@ router.post('/register', async (req, res) => {
 
         // Check for existing email
         const existingEmail = await collection.findOne({ email: req.body.email });
-
+        if (existingEmail) {
+            logger.error('Email already exists');
+            return res.status(400).json({ error: 'This email is already registered' });
+            }
         const salt = await bcryptjs.genSalt(10);
         const hash = await bcryptjs.hash(req.body.password, salt);
         const email = req.body.email;
@@ -47,7 +50,7 @@ router.post('/register', async (req, res) => {
 
         const authtoken = jwt.sign(payload, JWT_SECRET);
         logger.info('User registered successfully');
-        res.json({authtoken, email});
+        res.json({authtoken, email, userName: req.body.firstName});
     } catch (e) {
          return res.status(500).send('Internal server error');
     }
@@ -68,7 +71,7 @@ router.post('/login', async (req, res) => {
             let result = await bcryptjs.compare(req.body.password, theUser.password)
             if(!result) {
                 logger.error('Passwords do not match');
-                return res.status(404).json({ error: 'Wrong pasword' });
+                return res.status(401).json({ error: 'Wrong password' });
             }
             // Create JWT authentication if passwords match with user._id as payload
             let payload = {
@@ -77,11 +80,9 @@ router.post('/login', async (req, res) => {
                 },
             };
             // Fetch user details from the database
-            const userName = theUser.firstName;
-            const userEmail = theUser.email;
             const authtoken = jwt.sign(payload, JWT_SECRET);
             logger.info('User logged in successfully');
-            return res.status(200).json({ authtoken, userName, userEmail });
+            return res.status(200).json({ authtoken, userName: theUser.firstName, email: theUser.email });
         } else {
             logger.error('User not found'); // Send appropriate message if user not found
             return res.status(404).json({ error: 'User not found' });
@@ -95,20 +96,27 @@ router.post('/login', async (req, res) => {
 // Profile Endpoint
 router.get('/profile', async (req, res) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        if (!token) {
-            return res.status(401).json({ error: 'No token provided' });
+        const authHeader = req.header('Authorization');
+        
+        // Prevent crash if header is missing
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'No token provided or invalid format' });
         }
+
+        const token = authHeader.replace('Bearer ', '');
         const decoded = jwt.verify(token, JWT_SECRET);
+
         const db = await connectToDatabase();
         const collection = db.collection("users");
+
         const user = await collection.findOne({ _id: new ObjectId(decoded.user.id) });
+
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
         res.json({ name: user.firstName, email: user.email });
     } catch (e) {
-        logger.error(e);
+        logger.error("Profile fetch error:", e.message);
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -116,24 +124,33 @@ router.get('/profile', async (req, res) => {
 // Update Profile Endpoint
 router.put('/update', async (req, res) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-        if (!token) {
+        const authHeader = req.header('Authorization');
+
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ error: 'No token provided' });
         }
+
+        const token = authHeader.replace('Bearer ', '');
         const decoded = jwt.verify(token, JWT_SECRET);
+
         const db = await connectToDatabase();
         const collection = db.collection("users");
+
         const { email, name } = req.body;
+
         const result = await collection.updateOne(
             { _id: new ObjectId(decoded.user.id) },
             { $set: { firstName: name } }
         );
+
         if (result.modifiedCount === 0) {
             return res.status(404).json({ error: 'User not found or no changes made' });
         }
+
         res.json({ message: 'Profile updated successfully' });
+
     } catch (e) {
-        logger.error(e);
+        logger.error("Profile Update Error:", e.message);
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
