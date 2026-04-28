@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import './Profile.css'
-import {urlConfig} from '../../config';
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState({ name: '', email: '' });
@@ -10,16 +9,7 @@ const Profile = () => {
   const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const authtoken = sessionStorage.getItem("authtoken");
-    if (!authtoken) {
-      navigate("/app/login");
-    } else {
-      fetchUserProfile();
-    }
-  }, [navigate]);
-
-  const fetchUserProfile = async () => {
+  const fetchUserProfile = useCallback(async () => {
     try {
       const authtoken = sessionStorage.getItem("authtoken");
       if (!authtoken) {
@@ -45,7 +35,16 @@ const Profile = () => {
     } catch (error) {
       console.error("Fetch profile error:", error);
     }
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    const authtoken = sessionStorage.getItem("authtoken");
+    if (!authtoken) {
+      navigate("/app/login");
+    } else {
+      fetchUserProfile();
+    }
+  }, [navigate, fetchUserProfile]);
 
   const handleEdit = () => {
     setEditMode(true);
