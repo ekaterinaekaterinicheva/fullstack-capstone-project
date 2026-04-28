@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
             // Create JWT authentication if passwords match with user._id as payload
             let payload = {
                 user: {
-                    id: theUser._id.toString(),
+                    id: newUser.insertedId.toString(),
                 },
             };
             // Fetch user details from the database
