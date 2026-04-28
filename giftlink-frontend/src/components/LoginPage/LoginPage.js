@@ -10,7 +10,6 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [incorrect, setIncorrect] = useState(''); // A state for incorrect password
     const navigate = useNavigate();
-    const bearerToken = sessionStorage.getItem('bearer-token');
     const { setIsLoggedIn } = useAppContext();
 
     // If the bearerToken has a value (user already logged in), navigate to MainPage
