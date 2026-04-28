@@ -28,6 +28,8 @@ To ensure the project remains accessible for live demonstration, the services we
 - **Tools:** Git, GitHub Actions (CI/CD), Agile (Kanban)
 
 ## Architecture
+<img width="889" height="422" alt="GiftLink_Diagram" src="https://github.com/user-attachments/assets/9b446de4-1dfd-4603-9027-9036c18926a2" />
+
 The application follows a **Microservices architecture** to ensure scalability and separation of concerns.
 
 1. **Client Tier (Frontend):** A React-based SPA (Single Page Application) deployed on **Netlify**.
