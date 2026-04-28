@@ -4,6 +4,8 @@ import './Profile.css'
 import {urlConfig} from '../../config';
 import { useAppContext } from '../../context/AuthContext';
 
+console.log("The Profile.js file has been loaded by the browser!");
+
 const Profile = () => {
   const [userDetails, setUserDetails] = useState({});
  const [updatedDetails, setUpdatedDetails] = useState({});
