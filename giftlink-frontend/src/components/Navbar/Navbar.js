@@ -32,6 +32,7 @@ export default function Navbar() {
     }
 
     const profileSecton=()=>{
+        console.log("Welcome link clicked!");
         navigate(`/app/profile`);
     }
 
