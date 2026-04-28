@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
             // Create JWT authentication if passwords match with user._id as payload
             let payload = {
                 user: {
-                    id: newUser.insertedId.toString(),
+                    id: theUser._id.toString(),
                 },
             };
             // Fetch user details from the database
@@ -106,7 +106,7 @@ router.get('/profile', async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        res.json({ name: user.name, email: user.email });
+        res.json({ name: user.firstName, email: user.email });
     } catch (e) {
         logger.error(e);
         return res.status(500).json({ error: 'Internal server error' });
