@@ -27,7 +27,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch(`${urlConfig.backendUrl}/api/auth/profile`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/profile`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${authtoken}`,
@@ -70,7 +70,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/update`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${authtoken}`,
