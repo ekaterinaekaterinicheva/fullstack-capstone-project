@@ -12,6 +12,7 @@ const Profile = () => {
 
  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
+  console.log("1. Profile Component Rendered. Current state:", userDetails);
   useEffect(() => {
     const authtoken = sessionStorage.getItem("auth-token");
     if (!authtoken) {
@@ -25,6 +26,8 @@ const Profile = () => {
     try {
       const authtoken = sessionStorage.getItem("auth-token");
       const email = sessionStorage.getItem("email");
+      
+      console.log("2. fetchUserProfile function started");
 
       if (!authtoken) {
         navigate("/app/login");
@@ -43,6 +46,7 @@ const Profile = () => {
       if (response.ok) {
         const user = await response.json();
         setUserDetails(user);
+        console.log("4. Data received from backend:", data);
         setUpdatedDetails(user);
       } else {
         // Handle error case
@@ -69,6 +73,7 @@ const handleSubmit = async (e) => {
 
   try {
     const authtoken = sessionStorage.getItem("auth-token");
+    console.log("2. useEffect triggered");
     const email = sessionStorage.getItem("email");
 
     if (!authtoken || !email) {
