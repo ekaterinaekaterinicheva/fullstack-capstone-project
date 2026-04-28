@@ -11,7 +11,7 @@ function DetailsPage() {
     const [error, setError] = useState(null);
 
 	useEffect(() => {
-        const authenticationToken = sessionStorage.getItem('auth-token');
+        const authenticationToken = sessionStorage.getItem('authtoken');
         if (!authenticationToken) {
 			// Check for authentication and redirect
             navigate('/app/login')

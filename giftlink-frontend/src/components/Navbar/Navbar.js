@@ -9,13 +9,13 @@ export default function Navbar() {
 
     const navigate=useNavigate();
     useEffect(() => {
-        const authTokenFromSession = sessionStorage.getItem('auth-token');
+        const authTokenFromSession = sessionStorage.getItem('authtoken');
         const nameFromSession = sessionStorage.getItem('name');
         if (authTokenFromSession) {
             if(isLoggedIn && nameFromSession) {
               setUserName(nameFromSession);
             } else {
-              sessionStorage.removeItem('auth-token');
+              sessionStorage.removeItem('authtoken');
               sessionStorage.removeItem('name');
               sessionStorage.removeItem('email');
               setIsLoggedIn(false);
@@ -24,7 +24,7 @@ export default function Navbar() {
     },[isLoggedIn, setIsLoggedIn, setUserName]);
 
     const handleLogout=()=>{
-        sessionStorage.removeItem('auth-token');
+        sessionStorage.removeItem('authtoken');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('email');
         setIsLoggedIn(false);

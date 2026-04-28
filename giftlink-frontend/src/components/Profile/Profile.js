@@ -7,9 +7,9 @@ import { useAppContext } from '../../context/AuthContext';
 console.log("The Profile.js file has been loaded by the browser!");
 
 const Profile = () => {
-  const [userDetails, setUserDetails] = useState({});
+ const [userDetails, setUserDetails] = useState({});
  const [updatedDetails, setUpdatedDetails] = useState({});
- const {setUserName} = useAppContext();
+ // const {setUserName} = useAppContext();
  const [changed, setChanged] = useState("");
 
  const [editMode, setEditMode] = useState(false);
@@ -41,7 +41,6 @@ const Profile = () => {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${authtoken}`, // Pass the JWT token
-          "Email": email,
         },
       });
 

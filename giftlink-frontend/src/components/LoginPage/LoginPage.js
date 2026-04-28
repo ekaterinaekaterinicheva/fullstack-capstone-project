@@ -15,7 +15,7 @@ function LoginPage() {
 
     // If the bearerToken has a value (user already logged in), navigate to MainPage
     useEffect(() => {
-        if (sessionStorage.getItem('auth-token')) {
+        if (sessionStorage.getItem('authtoken')) {
           navigate('/app')
         }
       }, [navigate])
@@ -40,7 +40,7 @@ function LoginPage() {
         console.log('Json',json);
         if (json.authtoken) {
             // Set user details
-          sessionStorage.setItem('auth-token', json.authtoken);
+          sessionStorage.setItem('authtoken', json.authtoken);
           sessionStorage.setItem('name', json.userName);
           sessionStorage.setItem('email', json.userEmail);
             // Set the user's state to log in
