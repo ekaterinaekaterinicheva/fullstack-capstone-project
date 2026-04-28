@@ -26,8 +26,7 @@ function LoginPage() {
         const res = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
             method: 'POST',
             headers: {
-                'content-type': 'application/json',
-                'Authorization': bearerToken ? `Bearer ${bearerToken}` : '', // Include Bearer token if available
+                'content-type': 'application/json'
             },
             body: JSON.stringify({
                 email: email,
@@ -37,12 +36,13 @@ function LoginPage() {
 
         // Access data coming from fetch API
         const json = await res.json();
-        console.log('Json',json);
-        if (json.authtoken) {
+        console.log('Login Response:',json);
+
+        if (res.ok && json.authtoken) {
             // Set user details
           sessionStorage.setItem('authtoken', json.authtoken);
           sessionStorage.setItem('name', json.userName);
-          sessionStorage.setItem('email', json.userEmail);
+          sessionStorage.setItem('email', json.userEmail || json.email);
             // Set the user's state to log in
           setIsLoggedIn(true);
             // Navigate to the MainPage after logging in
