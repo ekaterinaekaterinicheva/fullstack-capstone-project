@@ -33,7 +33,6 @@ To ensure the project remains accessible for live demonstration, the services we
 The application follows a **Microservices architecture** to ensure scalability and separation of concerns.
 
 1. **Client Tier (Frontend):** A React-based SPA (Single Page Application) deployed on **Netlify**.
-   - Uses Edge Routing for fast delivery.
    - Handles state management and dynamic UI updates.
    - Communicates with the Logic Tier via secure REST APIs.
 
