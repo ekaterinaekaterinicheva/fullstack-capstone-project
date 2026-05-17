@@ -8,7 +8,7 @@ const natural = require("natural");
 
 // Initialize the express server
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 5000;
 
 app.use(express.json());
 app.use(expressPino);
